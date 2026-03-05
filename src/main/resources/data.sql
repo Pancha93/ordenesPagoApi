@@ -1,0 +1,11 @@
+-- Este archivo ya no se usa. Los usuarios se crean automáticamente con DataInitializer.java
+-- Si quieres usar este archivo, cambia en application.properties: spring.sql.init.mode=always
+
+-- Usuarios de prueba
+-- Password para todos: "password123"
+-- Hash BCrypt generado: $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
+-- INSERT INTO users (email, password, full_name, role, active, created_at, updated_at)
+-- VALUES 
+-- ('admin@vortexbird.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'Juan Admin', 'ADMIN', true, NOW(), NOW()),
+-- ('operator@vortexbird.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'María Operadora', 'OPERATOR', true, NOW(), NOW())
+-- ON CONFLICT (email) DO NOTHING;
