@@ -243,7 +243,7 @@ src/main/java/com/vortexbird/ordenesPago/
 │   ├── OrderStatusLog.java         # Auditoría de cambios
 │   └── User.java                   # Usuarios del sistema
 ├── enums/
-│   ├── OrderStatus.java            # PENDING, APPROVED, REJECTED, ARCHIVED
+│   ├── OrderStatus.java            # PENDING, APPROVED, REJECTED
 │   └── UserRole.java               # ADMIN, OPERATOR
 ├── exception/
 │   ├── handler/

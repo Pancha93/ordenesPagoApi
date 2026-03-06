@@ -6,7 +6,9 @@ package com.vortexbird.ordenesPago.enums;
  * Transiciones válidas:
  * - PENDING -> APPROVED (solo ADMIN)
  * - PENDING -> REJECTED (solo ADMIN)
- * - REJECTED -> ARCHIVED (proceso automático)
+ * 
+ * Nota: El archivado se maneja con el campo booleano 'archived',
+ * no con un estado adicional.
  */
 public enum OrderStatus {
     /**
@@ -22,10 +24,5 @@ public enum OrderStatus {
     /**
      * Orden rechazada por un administrador
      */
-    REJECTED,
-    
-    /**
-     * Orden archivada por proceso de limpieza (después de REJECTED)
-     */
-    ARCHIVED
+    REJECTED
 }

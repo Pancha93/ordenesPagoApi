@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  * 2. OPERATOR sube factura (opcional al crear)
  * 3. ADMIN aprueba (APPROVED) o rechaza (REJECTED)
  * 4. Si se aprueba, se notifica al sistema externo
- * 5. Si se rechaza, puede archivarse luego (ARCHIVED)
+ * 5. Si se rechaza, puede archivarse luego (campo archived=true)
  * 
  * Relaciones:
  * - ManyToOne con User (createdBy)

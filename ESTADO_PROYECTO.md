@@ -29,7 +29,7 @@
 
 #### 5. **Enumeraciones** (enums/)
 - ✅ `UserRole.java` - ADMIN, OPERATOR
-- ✅ `OrderStatus.java` - PENDING, APPROVED, REJECTED, ARCHIVED
+- ✅ `OrderStatus.java` - PENDING, APPROVED, REJECTED
 
 #### 6. **Excepciones** (exception/)
 - ✅ `BusinessException.java` - Excepción base
