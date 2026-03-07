@@ -27,9 +27,6 @@
 -- Primero, eliminar el trigger si existe (para poder re-ejecutar el script)
 DROP TRIGGER IF EXISTS audit_order_status_change ON orders;
 
--- Eliminar la función si existe
-DROP FUNCTION IF EXISTS fn_audit_order_status_change();
-
 -- =====================================================
 -- FUNCIÓN: fn_audit_order_status_change
 -- =====================================================

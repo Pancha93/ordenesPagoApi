@@ -17,6 +17,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Configuración completa de Spring Security 6 con JWT.
@@ -49,6 +55,9 @@ public class SecurityConfig {
             // Deshabilitar CSRF (no necesario para APIs stateless)
             .csrf(csrf -> csrf.disable())
             
+            // Configurar CORS
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            
             // Configurar política de sesiones (stateless)
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -78,6 +87,52 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
+    }
+    
+    /**
+     * Configuración de CORS para permitir peticiones desde el frontend.
+     * Permite peticiones desde localhost:4200 (Angular dev server) y localhost:3000.
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        
+        // Orígenes permitidos (frontend)
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:4200",  // Angular dev server
+            "http://localhost:3000"   // Alternativa
+        ));
+        
+        // Métodos HTTP permitidos
+        configuration.setAllowedMethods(Arrays.asList(
+            "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
+        ));
+        
+        // Headers permitidos
+        configuration.setAllowedHeaders(Arrays.asList(
+            "Authorization",
+            "Content-Type",
+            "Accept",
+            "Origin",
+            "X-Requested-With"
+        ));
+        
+        // Headers expuestos al cliente
+        configuration.setExposedHeaders(Arrays.asList(
+            "Authorization",
+            "Content-Type"
+        ));
+        
+        // Permitir credenciales (cookies, authorization headers)
+        configuration.setAllowCredentials(true);
+        
+        // Tiempo de caché de la configuración CORS (en segundos)
+        configuration.setMaxAge(3600L);
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        
+        return source;
     }
     
     /**

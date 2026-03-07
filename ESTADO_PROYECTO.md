@@ -70,36 +70,23 @@
 
 ---
 
-## ⚠️ PENDIENTE DE IMPLEMENTACIÓN
+## ⚠️ PENDIENTE DE IMPLEMENTACIÓN (RESUMEN ACTUAL)
 
-### 🔧 Implementaciones de Servicios (Crítico)
+### 🔧 Implementaciones de Servicios (Estado)
 
-Las **interfaces ya están creadas**, pero faltan las implementaciones:
+Las **interfaces ya estaban creadas**; varias implementaciones ahora están disponibles en `src/main/java/com/vortexbird/ordenesPago/service/impl/`.
 
-1. **OrderServiceImpl** 
-   - Lógica de creación, aprobación, rechazo
-   - Validación de transiciones de estado
-   - Llamar a ExternalNotificationService al aprobar
-   - Filtros y paginación
+- ✅ **OrderServiceImpl** — Implementado (creación, listado, aprobar/rechazar, validaciones de estado, notificaciones externas).
+- ✅ **InvoiceServiceImpl** — Implementado (upload, vinculación con `StorageService`, validación de tipos).
+- ✅ **LocalStorageServiceImpl** — Implementado (almacenamiento en `./uploads`, generación de URLs de descarga para desarrollo).
+- ✅ **ExternalNotificationServiceImpl** — Implementado (notificación via `WebClient`, fire-and-forget, timeouts manejados).
+- ⏳ **S3StorageServiceImpl** — No implementado (pendiente para producción; pendiente si se requiere S3 real).
 
-2. **InvoiceServiceImpl**
-   - Upload de archivos
-   - Integración con StorageService
-   - Validación de tipos de archivo
-
-3. **StorageServiceImpl**
-   - **LocalStorageServiceImpl**: Para desarrollo (guardar en ./uploads)
-   - **S3StorageServiceImpl**: Para producción (AWS S3)
-   - Generación de URLs presigned
-
-4. **ExternalNotificationServiceImpl**
-   - Notificar a sistema externo con WebClient
-   - Manejo de timeouts y errores
-   - Fire-and-forget (no bloquear aprobación)
+> Nota: Las implementaciones señaladas como ✅ se pueden revisar en `src/main/java/com/vortexbird/ordenesPago/service/impl/`.
 
 ### 📊 Base de Datos (SQL Scripts)
 
-5. **Trigger SQL** - `order_status_trigger.sql`
+5. **Trigger SQL** - `order_status_trigger.sql` (implementado en `src/main/resources/db/`)
    ```sql
    CREATE TRIGGER audit_order_status_change
    AFTER UPDATE ON orders
@@ -108,7 +95,7 @@ Las **interfaces ya están creadas**, pero faltan las implementaciones:
    INSERT INTO order_status_log (...)
    ```
 
-6. **Stored Procedure** - `archive_rejected_orders.sql`
+6. **Stored Procedure** - `archive_rejected_orders.sql` (implementado en `src/main/resources/db/`)
    ```sql
    CREATE PROCEDURE archive_old_rejected_orders(cutoff_date TIMESTAMP)
    BEGIN
@@ -188,16 +175,17 @@ GET /api/health
 ```
 POST /api/orders
 ```
-**Nota:** Fallará porque falta implementar OrderServiceImpl
+**Nota:** El endpoint de creación/listado/aprobación de órdenes ahora está implementado (`OrderServiceImpl`).
 
 ---
 
 ## 📋 PLAN DE CONTINUACIÓN
 
-### Fase 1: Servicios Core (1-2 horas)
-1. Implementar `OrderServiceImpl`
-2. Implementar `InvoiceServiceImpl`
-3. Implementar `LocalStorageServiceImpl`
+### Fase 1: Servicios Core (completado / restante)
+1. Implementar `OrderServiceImpl` (✅ completado)
+2. Implementar `InvoiceServiceImpl` (✅ completado)
+3. Implementar `LocalStorageServiceImpl` (✅ completado)
+4. Implementar `S3StorageServiceImpl` (⏳ pendiente)
 
 ### Fase 2: Integración Externa (30 min)
 4. Implementar `ExternalNotificationServiceImpl` con WebClient
@@ -217,7 +205,7 @@ POST /api/orders
 
 ---
 
-## 💡 NOTAS IMPORTANTES
+## 💡 NOTAS IMPORTANTES  
 
 ### ✅ Lo que SÍ funciona ahora:
 - Autenticación JWT completa
@@ -228,13 +216,11 @@ POST /api/orders
 - Manejo de errores global
 
 ### ⚠️ Lo que NO funciona (por implementar):
-- Crear órdenes (falta OrderServiceImpl)
-- Listar órdenes (falta OrderServiceImpl)
-- Aprobar/Rechazar (falta OrderServiceImpl)
-- Subir facturas (falta InvoiceServiceImpl y StorageService)
+- Subir facturas a S3 (la implementación local funciona; `S3StorageServiceImpl` es pendiente para producción)
+- Implementar tests unitarios e integración para servicios y controladores (pendiente)
 
 ### 🎯 Prioridad:
-**URGENTE:** Implementar OrderServiceImpl para tener un flujo completo funcional.
+**URGENTE:** Añadir `S3StorageServiceImpl` si se requiere despliegue a producción y crear tests automatizados.
 
 ---
 
@@ -267,5 +253,5 @@ Si continúas con este proyecto:
 
 ---
 
-**Última actualización:** 4 de marzo de 2026  
+**Última actualización:** 7 de marzo de 2026
 **Estado:** Base sólida lista - Falta implementar lógica de servicios
