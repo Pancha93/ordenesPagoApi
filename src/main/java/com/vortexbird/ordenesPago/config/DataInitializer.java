@@ -50,11 +50,25 @@ public class DataInitializer {
                 userRepository.save(operator);
                 log.info("Usuario OPERATOR creado: operator@vortexbird.com");
             }
+
+            // Crear usuario OPERATOR si no existe
+            if (!userRepository.existsByEmail("operator2@vortexbird.com")) {
+                User operator = User.builder()
+                        .email("operator2@vortexbird.com")
+                        .password(passwordEncoder.encode("123456"))
+                        .fullName("Alison Operadora")
+                        .role(UserRole.OPERATOR)
+                        .active(true)
+                        .build();
+                userRepository.save(operator);
+                log.info("Usuario OPERATOR creado: operator2@vortexbird.com");
+            }
             
             log.info("=================================================");
             log.info("Usuarios de prueba listos:");
             log.info("ADMIN: admin@vortexbird.com / password123");
             log.info("OPERATOR: operator@vortexbird.com / password123");
+            log.info("OPERATOR: operator2@vortexbird.com / 123456");
             log.info("=================================================");
         };
     }
