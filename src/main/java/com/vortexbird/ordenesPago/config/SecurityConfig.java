@@ -68,6 +68,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/health/**").permitAll()
                 
+                // Archivos con presigned URLs (sin autenticación JWT, el token presigned es suficiente)
+                .requestMatchers("/api/files/**").permitAll()
+                
                 // Swagger/OpenAPI (público para desarrollo)
                 .requestMatchers(
                     "/swagger-ui/**",

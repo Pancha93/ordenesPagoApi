@@ -1,7 +1,9 @@
 package com.vortexbird.ordenesPago.service.impl;
 
 import com.vortexbird.ordenesPago.exception.StorageException;
+import com.vortexbird.ordenesPago.service.PresignedUrlService;
 import com.vortexbird.ordenesPago.service.StorageService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,16 +14,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
 import java.util.UUID;
 
 /**
  * Implementación local de StorageService para desarrollo.
- * Almacena archivos en el sistema de archivos local.
+ * Almacena archivos en el sistema de archivos local y simula el comportamiento de S3.
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class LocalStorageServiceImpl implements StorageService {
+    
+    private final PresignedUrlService presignedUrlService;
     
     @Value("${storage.local.base-path:./uploads}")
     private String basePath;
@@ -52,9 +56,9 @@ public class LocalStorageServiceImpl implements StorageService {
     
     @Override
     public String generateDownloadUrl(String storageKey, int expirationMinutes) {
-        // Para desarrollo, retornar URL del endpoint de descarga
-        String encodedKey = Base64.getUrlEncoder().encodeToString(storageKey.getBytes());
-        return "http://localhost:8080/api/files/download/" + encodedKey;
+        // Generar token presigned temporal (simula S3 presigned URLs)
+        String token = presignedUrlService.generatePresignedToken(storageKey, expirationMinutes);
+        return "http://localhost:8080/api/files/" + token;
     }
     
     @Override
