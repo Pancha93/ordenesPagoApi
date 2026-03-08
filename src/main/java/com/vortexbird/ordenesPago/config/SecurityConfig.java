@@ -103,7 +103,8 @@ public class SecurityConfig {
         // Orígenes permitidos (frontend)
         configuration.setAllowedOrigins(Arrays.asList(
             "http://localhost:4200",  // Angular dev server
-            "http://localhost:3000"   // Alternativa
+            "http://localhost:3000",  // Alternativa dev
+            "http://localhost"        // Docker (puerto 80)
         ));
         
         // Métodos HTTP permitidos
