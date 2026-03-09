@@ -4,7 +4,7 @@ Sistema de gestión de Órdenes de Pago con Spring Boot 4.0.3
 
 Administra las órdenes de pago, permitiendo a los usuarios crear pedidos, adjuntar archivos de factura (PDF o imágenes), aprobarlos o rechazarlos y notificar a un sistema externo tras la aprobación.
 
-## 🚀 Tecnologías
+## Tecnologías
 
 - **Java 21**
 - **Spring Boot 4.0.3**
@@ -14,14 +14,14 @@ Administra las órdenes de pago, permitiendo a los usuarios crear pedidos, adjun
 - **Swagger/OpenAPI 3** (springdoc-openapi)
 - **Maven**
 
-## 📋 Prerrequisitos
+## Prerrequisitos
 
 - JDK 21 instalado
 - Maven 3.8+ instalado
 - PostgreSQL 14+ instalado y ejecutándose
 - IDE recomendado: IntelliJ IDEA o VS Code
 
-## 🔧 Configuración Inicial
+## Configuración Inicial
 
 ### 1. Crear la Base de Datos
 
@@ -46,7 +46,7 @@ spring.datasource.username=postgres
 spring.datasource.password=root
 ```
 
-## 🏃 Ejecutar la Aplicación
+## Ejecutar la Aplicación
 
 ### Opción 1: Desde la línea de comandos
 
@@ -63,7 +63,7 @@ mvn spring-boot:run
 
 La aplicación iniciará en: **http://localhost:8080**
 
-## 📚 Acceder a Swagger UI
+## Acceder a Swagger UI
 
 Una vez la aplicación esté ejecutándose, puedes acceder a la documentación interactiva:
 
@@ -77,7 +77,7 @@ http://localhost:8080/swagger-ui.html
 http://localhost:8080/api-docs
 ```
 
-## 🧪 Probar la API
+## Probar la API
 
 ### 1. Health Check (sin autenticación)
 
@@ -103,15 +103,15 @@ curl http://localhost:8080/api/health/ping
 
 Respuesta: `pong`
 
-## 📖 Documentación API con Swagger
+## Documentación API con Swagger
 
 En Swagger UI podrás:
 
-✅ Ver todos los endpoints disponibles  
-✅ Probar las APIs directamente desde el navegador  
-✅ Ver los esquemas de request/response  
-✅ Autenticarte con JWT (cuando esté implementado)  
-✅ Ver códigos de respuesta HTTP  
+ Ver todos los endpoints disponibles  
+ Probar las APIs directamente desde el navegador  
+ Ver los esquemas de request/response  
+ Autenticarte con JWT 
+ Ver códigos de respuesta HTTP  
 
 ### Características de Swagger Configuradas:
 
@@ -120,7 +120,7 @@ En Swagger UI podrás:
 - **Seguridad JWT**: Botón "Authorize" para agregar token Bearer
 - **Try it out**: Ejecutar directamente desde la UI
 
-## 🔐 Seguridad (Estado Actual)
+##  Seguridad (Estado Actual)
 
 ✅ **Implementación COMPLETA de JWT + RBAC**
 
@@ -131,21 +131,25 @@ En Swagger UI podrás:
 
 ### Usuarios de Prueba:
 
-La aplicación crea automáticamente dos usuarios:
+La aplicación crea automáticamente 3 usuarios:
 
 **ADMIN:**
 ```
 Email: admin@vortexbird.com
 Password: password123
 ```
-
 **OPERATOR:**
 ```
 Email: operator@vortexbird.com
 Password: password123
 ```
+**OPERATOR:**
+```
+Email: operator2@vortexbird.com
+Password: 123456
+```
 
-## 📖 Usando la API con Swagger
+##  Usando la API con Swagger
 
 ### 1. Autenticarse
 
@@ -209,7 +213,7 @@ Content-Type: multipart/form-data
 file: [PDF o imagen]
 ```
 
-## 📦 Estructura del Proyecto Implementada
+##  Estructura del Proyecto Implementada
 
 ```
 src/main/java/com/vortexbird/ordenesPago/
@@ -275,62 +279,35 @@ src/main/java/com/vortexbird/ordenesPago/
 └── OrdenesPagoApplication.java
 ```
 
-## ✅ Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
 ### Autenticación y Autorización
-- ✅ Login con JWT (POST /api/auth/login)
-- ✅ JWT stateless con expiración configurable
-- ✅ Autorización basada en roles (RBAC)
-- ✅ @PreAuthorize en servicios
-- ✅ Manejo de errores 401/403
+-  Login con JWT (POST /api/auth/login)
+-  JWT stateless con expiración configurable
+-  Autorización basada en roles (RBAC)
+-  @PreAuthorize en servicios
+-  Manejo de errores 
 
 ### Gestión de Órdenes
-- ✅ Crear orden (OPERATOR)
-- ✅ Listar órdenes con filtros y paginación
-- ✅ Obtener detalle de orden
-- ✅ Aprobar orden (ADMIN)
-- ✅ Rechazar orden con razón (ADMIN)
-- ✅ Validación de transiciones de estado
+-  Crear orden (OPERATOR)
+-  Listar órdenes con filtros y paginación
+-  Obtener detalle de orden
+-  Aprobar orden (ADMIN)
+-  Rechazar orden con razón (ADMIN)
+-  Validación de transiciones de estado
 
 ### Gestión de Facturas
-- ✅ Subir factura (multipart/form-data)
-- ✅ Obtener información de factura
-- ✅ Interfaz StorageService (preparada para S3)
-- ✅ Validación de tipos de archivo
+-  Subir factura 
+-  Obtener información de factura
+-  Interfaz StorageService (preparada para S3)
+-  Validación de tipos de archivo
 
 ### Arquitectura y Calidad
-- ✅ Arquitectura en capas limpia
-- ✅ Manejo global de excepciones
-- ✅ DTOs desacoplados de entidades
-- ✅ Repositories con Spring Data JPA
-- ✅ Auditoría automática (createdAt, updatedAt)
-- ✅ Documentación Swagger/OpenAPI
-- ✅ Validaciones con Bean Validation
-- ✅ Logging estructurado
-
-## ⏳ Pendiente de Implementación
-
-1. **Implementaciones de Servicios:** OrderServiceImpl, InvoiceServiceImpl (interfaces creadas)
-2. **StorageService:** Implementación S3 o Local (interfaz lista)
-3. **ExternalNotificationService:** WebClient para notificaciones (config lista)
-4. **Triggers SQL:** Auditoría de cambios de estado en OrderStatusLog
-5. **Stored Procedure:** Archivado automático de órdenes rechazadas
-6. **Tests Unitarios:** Ejemplos representativos
-
-## 📝 Próximos Pasos Recomendados
-
-1. ⏳ Implementar OrderServiceImpl con lógica de negocio completa
-2. ⏳ Implementar InvoiceServiceImpl con StorageService
-3. ⏳ Implementar StorageService (S3 o Local)
-4. ⏳ Implementar ExternalNotificationServiceImpl con WebClient
-5. ⏳ Crear triggers y stored procedures SQL
-6. ⏳ Agregar tests unitarios
-
-## 📧 Contacto
-
-Para preguntas o soporte: soporte@vortexbird.com
-
----
-
-**Versión**: 1.0.0  
-**Última actualización**: 4 de marzo de 2026
+-  Arquitectura en capas limpia
+-  Manejo global de excepciones
+-  DTOs desacoplados de entidades
+-  Repositories con Spring Data JPA
+-  Auditoría automática (createdAt, updatedAt)
+-  Documentación Swagger/OpenAPI
+-  Validaciones con Bean Validation
+-  Logging estructurado

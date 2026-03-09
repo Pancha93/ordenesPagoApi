@@ -1,26 +1,22 @@
 # ==========================================
-# Multi-stage build para optimizar imagen
-# ==========================================
-
-# ==========================================
 # STAGE 1: Build
 # ==========================================
 FROM maven:3.9-eclipse-temurin-21-alpine AS build
 
 WORKDIR /app
 
-# Copiar solo archivos de dependencias primero (para cache de Docker)
+# Copiar solo archivos de dependencias primero 
 COPY pom.xml .
 COPY mvnw .
 COPY .mvn .mvn
 
-# Descargar dependencias (se cachea si pom.xml no cambia)
+# Descargar dependencias 
 RUN mvn dependency:go-offline -B
 
 # Copiar código fuente
 COPY src ./src
 
-# Compilar aplicación (sin ejecutar tests para build más rápido)
+# Compilar aplicación 
 RUN mvn clean package -DskipTests
 
 # ==========================================
@@ -39,7 +35,7 @@ COPY --from=build /app/target/*.jar app.jar
 # Exponer puerto 8080
 EXPOSE 8080
 
-# Variables de entorno (se sobreescriben en docker-compose)
+# Variables de entorno 
 ENV SPRING_PROFILES_ACTIVE=docker
 ENV JAVA_OPTS="-Xms256m -Xmx512m"
 

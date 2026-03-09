@@ -4,8 +4,6 @@
 
 Sistema backend REST construido con **Spring Boot 4.0.3** y **Java 21**, diseñado siguiendo principios de arquitectura limpia, separación de responsabilidades y mejores prácticas de Spring Framework.
 
----
-
 ## Decisiones Arquitectónicas Clave
 
 ### 1. Arquitectura en Capas
@@ -18,10 +16,10 @@ Controller → Service → Repository → Entity
 ```
 
 **Razones:**
-- ✅ Separación clara de responsabilidades
-- ✅ Testabilidad: Cada capa se puede testear independientemente
-- ✅ Mantenibilidad: Cambios en una capa no afectan otras
-- ✅ Reutilización: Servicios pueden ser llamados desde múltiples controllers
+-  Separación clara de responsabilidades
+-  Testabilidad: Cada capa se puede testear independientemente
+-  Mantenibilidad: Cambios en una capa no afectan otras
+-  Reutilización: Servicios pueden ser llamados desde múltiples controllers
 
 **Implementación:**
 - **Controllers**: Solo reciben requests, validan entrada, delegan a servicios
@@ -55,7 +53,7 @@ Controller → Service → Repository → Entity
 - **Nivel 2 (Método)**: @PreAuthorize en servicios valida roles
 - **Nivel 3 (Dato)**: Servicios verifican ownership (OPERATOR solo ve sus órdenes)
 
-**¿Por qué @PreAuthorize en servicios y not en controllers?**
+**¿Por qué @PreAuthorize en servicios y no en controllers?**
 - Seguridad real, no solo documentativa
 - Si el servicio es llamado desde múltiples lugares, la seguridad se mantiene
 - Facilita testing de autorización
@@ -104,8 +102,6 @@ BusinessException (base)
 - **Request**: Entrada de endpoints (validaciones con Bean Validation)
 - **Response**: Salida de endpoints (información controlada)
 - **External**: Payloads para integraciones externas
-
----
 
 ### 5. Transaccionalidad
 
@@ -266,28 +262,28 @@ Abstracción de acceso a datos con Spring Data JPA.
 ## Mejores Prácticas Aplicadas
 
 ### Código Limpio
-- ✅ Métodos pequeños con responsabilidad única
-- ✅ Nombres descriptivos (no abbreviations)
-- ✅ Comentarios Javadoc en clases principales
-- ✅ No magic numbers (usar constantes)
+- Métodos pequeños con responsabilidad única
+- Nombres descriptivos (no abbreviations)
+- Comentarios Javadoc en clases principales
+- No magic numbers
 
 ### Spring Boot 4 Modernizado
-- ✅ Sin APIs deprecated
-- ✅ Configuración funcional (lambdas en SecurityConfig)
-- ✅ Records para DTOs inmutables (opcional)
-- ✅ Spring Security 6 sin WebSecurityConfigurerAdapter
+- Sin APIs deprecated
+- Configuración funcional (lambdas en SecurityConfig)
+- Records para DTOs inmutables 
+- Spring Security 6 sin WebSecurityConfigurerAdapter
 
 ### Seguridad
-- ✅ Contraseñas con BCrypt
-- ✅ JWT con clave secreta fuerte (512 bits)
-- ✅ CSRF deshabilitado (API stateless)
-- ✅ Roles con prefijo ROLE_ (Spring Security convention)
+- Contraseñas con BCrypt
+- JWT con clave secreta fuerte (512 bits)
+- CSRF deshabilitado (API stateless)
+- Roles con prefijo ROLE_ (Spring Security convention)
 
 ### Performance
-- ✅ Lazy loading en relaciones JPA
-- ✅ @Transactional(readOnly=true) en consultas
-- ✅ Paginación en listados
-- ✅ Índices en columnas de búsqueda frecuente
+- Lazy loading en relaciones JPA
+- @Transactional(readOnly=true) en consultas
+- Paginación en listados
+- Índices en columnas de búsqueda frecuente
 
 ---
 
@@ -306,28 +302,6 @@ Abstracción de acceso a datos con Spring Data JPA.
 - Endpoints protegidos (401/403)
 - @PreAuthorize funcionando correctamente
 
----
-
-## Escalabilidad y Mantenibilidad
-
-### Preparado para Escalar
-- ✅ Stateless (JWT) → múltiples instancias sin shared sessions
-- ✅ Connection pooling (HikariCP por defecto)
-- ✅ WebClient asíncrono para integraciones
-
-### Fácil de Mantener
-- ✅ Arquitectura en capas clara
-- ✅ Código autodocumentado
-- ✅ Swagger para documentación de API
-- ✅ Excepciones con mensajes claros
-
-### Fácil de Extender
-- ✅ Agregar nuevo endpoint: Controller → Service → Repository
-- ✅ Cambiar storage: Implementar StorageService
-- ✅ Agregar notificación: Implementar listener/event
-
----
-
 ## Configuración Externalizada
 
 **application.properties:**
@@ -337,21 +311,13 @@ Abstracción de acceso a datos con Spring Data JPA.
 - Storage (type, base path)
 - Logging levels
 
-**Ventajas:**
-- Configuración específica por entorno (dev, prod)
-- Secrets fuera del código
-- Profile-specific configs (@Profile)
-
----
 
 ## Conclusión
 
 Esta arquitectura cumple con:
-- ✅ Requisitos funcionales de la prueba técnica
-- ✅ Mejores prácticas de Spring Boot 4
-- ✅ Código limpio y mantenible
-- ✅ Seguridad robusta (JWT + RBAC)
-- ✅ Preparado para revisión técnica senior
-- ✅ Sin sobreingeniería
-
-**Próximos pasos:** Implementar lógica de servicios, StorageService y tests.
+- Requisitos funcionales de la prueba técnica
+- Mejores prácticas de Spring Boot 4
+- Código limpio y mantenible
+- Seguridad robusta (JWT + RBAC)
+- Preparado para revisión técnica senior
+- Sin sobreingeniería
