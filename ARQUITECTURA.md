@@ -58,8 +58,6 @@ Controller → Service → Repository → Entity
 - Si el servicio es llamado desde múltiples lugares, la seguridad se mantiene
 - Facilita testing de autorización
 
----
-
 ### 3. Manejo de Excepciones
 
 **Estrategia:** Jerarquía de excepciones + Handler global
@@ -177,18 +175,6 @@ public interface StorageService {
     boolean exists(String storageKey);
 }
 ```
-
-**Implementaciones:**
-- **S3StorageServiceImpl**: AWS S3 (producción)
-- **LocalStorageServiceImpl**: Sistema de archivos local (desarrollo)
-
-**Ventajas:**
-- Cambiar proveedor sin tocar lógica de negocio
-- Testing fácil con mock
-- Presigned URLs para descargas seguras
-
----
-
 ### 9. Integración Externa con WebClient
 
 **WebClient (Spring WebFlux):**
@@ -284,40 +270,3 @@ Abstracción de acceso a datos con Spring Data JPA.
 - @Transactional(readOnly=true) en consultas
 - Paginación en listados
 - Índices en columnas de búsqueda frecuente
-
----
-
-## Testing Strategy (Pendiente)
-
-### Tests Unitarios
-- Services con mocks de repositories
-- JwtTokenProvider con tokens válidos/inválidos
-- Mappers DTO ↔ Entity
-
-### Tests de Integración
-- Controllers con MockMvc + @WebMvcTest
-- Repositories con @DataJpaTest + H2
-
-### Tests de Seguridad
-- Endpoints protegidos (401/403)
-- @PreAuthorize funcionando correctamente
-
-## Configuración Externalizada
-
-**application.properties:**
-- Base de datos (URL, credenciales)
-- JWT (secret, expiration)
-- API externa (base URL, timeout)
-- Storage (type, base path)
-- Logging levels
-
-
-## Conclusión
-
-Esta arquitectura cumple con:
-- Requisitos funcionales de la prueba técnica
-- Mejores prácticas de Spring Boot 4
-- Código limpio y mantenible
-- Seguridad robusta (JWT + RBAC)
-- Preparado para revisión técnica senior
-- Sin sobreingeniería
